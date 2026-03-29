@@ -217,14 +217,14 @@ hugo-cms/
 
 ### 提交 Issue
 
-- 使用 [GitHub Issues](https://github.com/yourusername/hugo-cms/issues) 报告 bug 或请求新功能
+- 使用 [GitHub Issues](https://github.com/heheboy/hugo-cms/issues) 报告 bug 或请求新功能
 - 提交前请先搜索是否已有相关问题
 
 ### 开发流程
 
 ```bash
 # Fork 并克隆仓库
-git clone https://github.com/yourusername/hugo-cms.git
+git clone https://github.com/heheboy/hugo-cms.git
 
 # 创建功能分支
 git checkout -b feature/your-feature
