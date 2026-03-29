@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect, useCallback, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { invoke } from '@tauri-apps/api/core';

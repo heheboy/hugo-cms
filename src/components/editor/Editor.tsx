@@ -128,7 +128,7 @@ export function Editor() {
     // Simplified resize handling - only trigger on specific events, not continuously
     // Monaco's automaticLayout handles most cases, we only assist with fullscreen/window state changes
 
-    let resizeTimeout: NodeJS.Timeout | null = null;
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const debouncedLayoutUpdate = () => {
       if (resizeTimeout) {

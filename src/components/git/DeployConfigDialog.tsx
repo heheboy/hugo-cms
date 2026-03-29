@@ -118,7 +118,7 @@ export function DeployConfigDialog({ open, onOpenChange }: DeployConfigDialogPro
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
       console.error('Failed to save deploy config:', err);
-      setError(err instanceof Error ? error.message : String(err));
+      setError(err instanceof Error ? err.message : String(err));
     } finally {
       setIsLoading(false);
     }

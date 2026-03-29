@@ -73,7 +73,8 @@ export function Header({
 }: HeaderProps) {
   const { t, i18n } = useTranslation();
   const { currentProject, selectedFile } = useProjectStore();
-  const { isDirty } = useEditorStore();
+  const editorStore = useEditorStore();
+  const isDirty = editorStore.getIsDirty();
   const [isNewPostDialogOpen, setIsNewPostDialogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDeployConfigOpen, setIsDeployConfigOpen] = useState(false);
