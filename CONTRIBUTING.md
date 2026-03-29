@@ -110,6 +110,6 @@ npm run tauri:build
 如有疑问，欢迎：
 - 在 Issue 中提问
 - 加入我们的讨论区
-- 发送邮件到 [your-email@example.com]
+- 发送邮件到 [bengbeng9548@qq.com]
 
 再次感谢您的贡献！
