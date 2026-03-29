@@ -1,0 +1,454 @@
+{
+  "app": {
+    "name": "Hugo CMS",
+    "errors": {
+      "loadFileTree": "Failed to load file tree",
+      "openProject": "Failed to open project",
+      "createProject": "Failed to create project",
+      "createProjectDetail": "Failed to create project: {{error}}. Please ensure Hugo is installed and in PATH.",
+      "startPreview": "Failed to start preview",
+      "build": "Failed to build",
+      "deploy": "Failed to deploy",
+      "hugoNotInstalled": "Hugo is not installed. Please install Hugo first: https://gohugo.io/installation/",
+      "gitNoChanges": "No changes to commit",
+      "gitNotInitialized": "Project is not a Git repository. Please initialize Git first",
+      "gitNoRemote": "No remote repository configured or network connection failed",
+      "deployDetail": "Deploy failed: {{error}}",
+      "themeRequiredForNewContent": "Creating content requires a theme. Please install a theme first, or remove the theme configuration in hugo.toml to use blank theme.",
+      "archetypeNotFound": "Archetype template not found. Hugo will try to continue with default template.",
+      "createPostFailed": "Failed to create post: {{error}}",
+      "blankThemeNotSupported": "Hugo does not support completely blank theme. Please install at least one theme, or create basic template files."
+    },
+    "git": {
+      "commitMessage": "Update from Hugo CMS",
+      "deploySuccess": "Committed and pushed successfully!"
+    }
+  },
+  "common": {
+    "actions": {
+      "open": "Open",
+      "create": "Create",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "refresh": "Refresh",
+      "new": "New",
+      "browse": "Browse"
+    },
+    "status": {
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "modified": "Modified"
+    },
+    "language": {
+      "title": "Language",
+      "zhCN": "中文",
+      "en": "English"
+    }
+  },
+  "header": {
+    "buttons": {
+      "newPost": "New Post",
+      "preview": "Open Preview",
+      "stop": "Stop Preview",
+      "build": "Build",
+      "git": "Git",
+      "deploy": "Deploy",
+      "closeProject": "Close Project"
+    },
+    "badges": {
+      "modified": "Modified"
+    },
+    "dialog": {
+      "newPost": {
+        "title": "Create New Post",
+        "titleLabel": "Title",
+        "placeholder": "Enter post title...",
+        "slug": "Slug: {{slug}}",
+        "create": "Create",
+        "creating": "Creating...",
+        "cancel": "Cancel"
+      }
+    }
+  },
+  "sidebar": {
+    "project": {
+      "noProject": "No Project",
+      "openProject": "Open Project",
+      "newSite": "New Site"
+    },
+    "tabs": {
+      "files": "Files",
+      "media": "Media",
+      "stats": "Stats"
+    },
+    "empty": {
+      "noFiles": "No files found",
+      "openPrompt": "Open a project to view files"
+    },
+    "comingSoon": {
+      "media": "Media browser coming soon",
+      "git": "Git integration coming soon"
+    },
+    "contextMenu": {
+      "newFile": "New File",
+      "newFolder": "New Folder",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "rename": "Rename",
+      "delete": "Delete",
+      "copied": "Copied to clipboard",
+      "deleteFileConfirm": "Are you sure you want to delete the file \"{{name}}\"?",
+      "deleteFolderConfirm": "Are you sure you want to delete the folder \"{{name}}\" and all its contents?",
+      "pasteFailed": "Paste operation failed",
+      "deleteFailed": "Delete failed",
+      "renameFailed": "Rename failed",
+      "createFileFailed": "Create file failed",
+      "createFolderFailed": "Create folder failed"
+    },
+    "dialog": {
+      "newName": "New Name",
+      "namePlaceholder": "Enter new name",
+      "fileName": "File Name",
+      "fileNamePlaceholder": "Enter file name (e.g., post.md)",
+      "folderName": "Folder Name",
+      "folderNamePlaceholder": "Enter folder name"
+    }
+  },
+  "editor": {
+    "modes": {
+      "edit": "Edit",
+      "split": "Split",
+      "preview": "Preview"
+    },
+    "empty": {
+      "noProject": "No Project Open",
+      "openPrompt": "Click \"Open\" to load a Hugo project",
+      "previewNotRunning": "Click Preview to start Hugo server"
+    },
+    "tooltip": {
+      "save": "Ctrl+S"
+    },
+    "alerts": {
+      "saveFailed": "Failed to save file: {{error}}"
+    },
+    "buttons": {
+      "save": "Save"
+    },
+    "toolbar": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "heading": "Heading",
+      "quote": "Quote",
+      "code": "Code Block",
+      "ul": "Unordered List",
+      "ol": "Ordered List",
+      "link": "Link",
+      "image": "Image",
+      "table": "Table",
+      "hr": "Horizontal Rule",
+      "attachment": "Attachment"
+    },
+    "insertImage": "Insert Image",
+    "insertAttachment": "Insert Attachment",
+    "unsavedChangesTitle": "Unsaved Changes",
+    "unsavedChangesDescription": "The file has unsaved changes. Do you want to save them?",
+    "dontSave": "Don't Save",
+    "saveAndClose": "Save and Close"
+  },
+  "terminal": {
+    "title": "Terminal",
+    "status": {
+      "serverRunning": "● Server Running",
+      "executing": "Executing..."
+    },
+    "placeholders": {
+      "typeCommand": "Enter command...",
+      "openProjectFirst": "Open a project first...",
+      "startTyping": "Type a command to start...",
+      "openProjectToEnable": "Open a project to enable terminal"
+    },
+    "quickCommands": {
+      "hugoServer": "hugo server",
+      "hugoBuild": "hugo build",
+      "hugoNew": "hugo new",
+      "gitStatus": "git status",
+      "gitAdd": "git add",
+      "gitCommit": "git commit"
+    },
+    "messages": {
+      "noProject": "No project selected. Please open a Hugo project first.",
+      "startingServer": "Starting Hugo server...",
+      "serverStarted": "Hugo server started on port {{port}}",
+      "creatingContent": "Creating new content: {{path}}...",
+      "runningCommand": "Running: {{command}}...",
+      "commandSuccess": "Command completed successfully.",
+      "exitCode": "Exit code: {{code}}"
+    },
+    "buttons": {
+      "clear": "Clear"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "general": "General",
+      "editor": "Editor",
+      "preview": "Preview",
+      "appearance": "Appearance"
+    },
+    "hugo": {
+      "title": "Hugo Configuration",
+      "description": "Configure Hugo executable path",
+      "path": "Hugo Path",
+      "pathPlaceholder": "Leave empty to use system PATH",
+      "pathHint": "If Hugo is not in system PATH, specify the full path",
+      "verify": "Verify",
+      "autoDetect": "Auto Detect",
+      "version": "Version",
+      "usingSystem": "Using Hugo from system PATH"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Select interface language"
+    },
+    "editor": {
+      "title": "Editor Settings",
+      "description": "Configure code editor behavior",
+      "fontSize": "Font Size",
+      "tabSize": "Tab Size",
+      "wordWrap": "Word Wrap",
+      "wordWrapDescription": "Automatically wrap long lines",
+      "lineNumbers": "Line Numbers",
+      "lineNumbersDescription": "Show line numbers",
+      "minimap": "Minimap",
+      "minimapDescription": "Show code minimap on the right side",
+      "insertSpaces": "Insert Spaces",
+      "insertSpacesDescription": "Use spaces instead of tabs"
+    },
+    "preview": {
+      "title": "Preview Settings",
+      "description": "Configure Hugo preview server",
+      "defaultPort": "Default Port",
+      "defaultPortDescription": "Default port for Hugo server (1000-9999)",
+      "autoRefresh": "Auto Refresh",
+      "autoRefreshDescription": "Automatically refresh preview on file changes",
+      "openInBrowser": "Open in Browser",
+      "openInBrowserDescription": "Automatically open browser when preview starts"
+    },
+    "appearance": {
+      "title": "Appearance Settings",
+      "description": "Customize interface appearance",
+      "theme": "Theme",
+      "themeSystem": "System",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "sidebarWidth": "Sidebar Width",
+      "sidebarWidthDescription": "Adjust sidebar width (200-400px)",
+      "terminalHeight": "Terminal Height",
+      "terminalHeightDescription": "Adjust terminal height (150-500px)"
+    },
+    "comingSoon": {
+      "editor": "Editor settings coming soon",
+      "preview": "Preview settings coming soon",
+      "appearance": "Appearance settings coming soon"
+    }
+  },
+  "theme": {
+    "title": "Theme Manager",
+    "noProject": "Please open a project first",
+    "installed": "Installed",
+    "market": "Theme Market",
+    "installedThemes": "Installed Themes ({{count}})",
+    "officialThemes": "Official Themes ({{count}})",
+    "noThemes": "No themes installed",
+    "browseMarket": "Browse Theme Market",
+    "searchPlaceholder": "Search themes...",
+    "loading": "Loading...",
+    "noSearchResults": "No themes found matching your search",
+    "install": "Install",
+    "installing": "Installing...",
+    "installed": "Installed",
+    "installFromUrl": "Install from URL",
+    "activate": "Activate",
+    "active": "Active",
+    "noPreview": "No preview",
+    "version": "Version",
+    "by": "by",
+    "installTitle": "Install Theme",
+    "fromGit": "From Git Repository",
+    "fromZip": "From ZIP File",
+    "gitUrl": "Git Repository URL",
+    "gitUrlHint": "Supports GitHub, GitLab and other Git repositories",
+    "zipFile": "ZIP File",
+    "zipFileHint": "Select a theme ZIP file",
+    "downloadUrl": "Download URL",
+    "downloadUrlHint": "Enter theme download URL",
+    "name": "Theme Name",
+    "nameHint": "Folder name for local storage",
+    "uninstall": "Uninstall",
+    "uninstallConfirm": "Are you sure you want to uninstall theme {{name}}?",
+    "checkUpdates": "Check Updates",
+    "checkingUpdates": "Checking...",
+    "updateAvailable": "Update Available",
+    "update": "Update",
+    "updating": "Updating...",
+    "noUpdates": "No updates available",
+    "currentVersion": "Current: {{version}}",
+    "latestVersion": "Latest: {{version}}",
+    "missingTitle": "Theme Not Installed",
+    "missingDescription": "The theme \"{{theme}}\" is configured but not found. You need to install it before previewing.",
+    "themeRequired": "A theme is required to preview the site.",
+    "fromMarket": "Install from Theme Market",
+    "fromMarketDesc": "Browse official Hugo themes and install with one click",
+    "fromFolder": "Local Folder",
+    "fromFolderDesc": "Select a theme folder from your computer",
+    "folderPath": "Folder Path",
+    "selectFolder": "Select Theme Folder",
+    "selectFolderPlaceholder": "Select theme folder...",
+    "folderHint": "Select a local folder containing theme files",
+    "folderInstallNotImplemented": "Install from folder feature is not yet implemented",
+    "installFromLocal": "Install from Local",
+    "fromZip": "Install from ZIP File",
+    "fromZipDesc": "Select a theme ZIP archive to install",
+    "editConfig": "Edit hugo.toml",
+    "editConfigDesc": "Manually remove or change theme configuration",
+    "customMarket": "Custom",
+    "customUrlPlaceholder": "Enter theme market JSON URL",
+    "customUrlHint": "Supports APIs that return JSON format theme lists",
+    "load": "Load",
+    "customThemes": "Custom Themes ({{count}})",
+    "noCustomThemes": "Enter URL to load custom theme market",
+    "loadCustomFailed": "Failed to load custom themes, please check the URL",
+    "officialMarketRedirect": "themes.gohugo.io is the official theme market, please switch to the \"Market\" tab to view",
+    "openUrlFailed": "Failed to open link"
+  },
+  "git": {
+    "title": "Git",
+    "noProject": "Please open a project first",
+    "changes": "Changes",
+    "staged": "Staged",
+    "history": "History",
+    "commit": "Commit",
+    "commitTitle": "Commit Changes",
+    "commitMessage": "Commit Message",
+    "commitMessagePlaceholder": "Enter commit message...",
+    "committing": "Committing...",
+    "filesToCommit": "{{count}} files to commit",
+    "pull": "Pull",
+    "push": "Push",
+    "stageAll": "Stage All",
+    "noStagedFiles": "No staged files",
+    "noChanges": "No changes",
+    "allChanges": "All Changes",
+    "createBranch": "Create Branch",
+    "branchName": "Branch Name",
+    "checkoutNewBranch": "Checkout new branch",
+    "create": "Create",
+    "refreshBranches": "Refresh branches",
+    "commitHistory": "Commit History",
+    "noCommits": "No commits yet",
+    "noDiff": "No diff",
+    "diff": "View Diff",
+    "staged": "Staged",
+    "unstaged": "Unstaged",
+    "modified": "Modified",
+    "untracked": "Untracked",
+    "viewDiff": "View Diff",
+    "stash": "Stash",
+    "stashes": "Stashes",
+    "noStashes": "No stashes",
+    "stashSave": "Stash Save",
+    "stashPop": "Stash Pop",
+    "stashApply": "Stash Apply",
+    "stashDrop": "Stash Drop",
+    "createStash": "Create Stash",
+    "createStashDescription": "Save your current changes to stash",
+    "stashMessagePlaceholder": "Enter stash message (optional)...",
+    "noStashMessage": "WIP on branch",
+    "tags": "Tags",
+    "noTags": "No tags",
+    "createTag": "Create Tag",
+    "createTagDescription": "Create a new tag for the current commit",
+    "tagName": "Tag Name",
+    "tagMessage": "Tag Message",
+    "tagMessagePlaceholder": "Enter tag message (optional for annotated tag)...",
+    "tagCommit": "Commit",
+    "tagCommitPlaceholder": "Leave empty for HEAD",
+    "deleteTag": "Delete Tag",
+    "pushTag": "Push Tag",
+    "pushAllTags": "Push All Tags",
+    "remotes": "Remotes",
+    "noRemotes": "No remotes configured",
+    "addRemote": "Add Remote",
+    "removeRemote": "Remove Remote",
+    "remoteName": "Remote Name",
+    "remoteUrl": "Remote URL",
+    "addRemoteDescription": "Add a new remote repository"
+  },
+  "media": {
+    "noProject": "Please open a project first",
+    "folders": "Folders",
+    "files": "Files",
+    "upload": "Upload",
+    "newFolder": "New Folder",
+    "rename": "Rename",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Delete File",
+    "deleteConfirmDescription": "Are you sure you want to delete {{name}}?",
+    "deleteFolderTitle": "Delete Folder",
+    "deleteFolderDescription": "Are you sure you want to delete the folder \"{{name}}\" and all its contents?",
+    "renameTitle": "Rename File",
+    "renameFolderTitle": "Rename Folder",
+    "renamePlaceholder": "Enter new name...",
+    "uploadTitle": "Upload Files",
+    "uploadDescription": "Drop files here or click to select",
+    "createFolderTitle": "Create Folder",
+    "createFolderDescription": "Enter folder name",
+    "folderNamePlaceholder": "folder-name",
+    "uploading": "Uploading...",
+    "uploadSuccess": "{{count}} files uploaded successfully",
+    "uploadPrompt": "Upload images and files here",
+    "empty": "No files",
+    "dropzoneText": "Drop files here or click to select",
+    "supportedFormats": "Supports: PNG, JPG, GIF, SVG, WebP",
+    "selectFiles": "Select Files",
+    "selectedFiles": "{{count}} files selected",
+    "clear": "Clear",
+    "open": "Open",
+    "copyPath": "Copy Path",
+    "copyMarkdown": "Copy Markdown",
+    "selectImage": "Select This Image",
+    "selectFile": "Select This File",
+    "preview": "Preview",
+    "root": "Root",
+    "rootShort": "Root",
+    "imagesFolder": "Images",
+    "imagesShort": "Images",
+    "attachmentsFolder": "Attachments",
+    "attachmentsShort": "Attachments",
+    "back": "Go Back"
+  },
+  "stats": {
+    "title": "Site Statistics",
+    "noProject": "Please open a project first",
+    "overview": "Overview",
+    "drafts": "Drafts",
+    "taxonomy": "Taxonomy",
+    "posts": "Posts",
+    "words": "Words",
+    "images": "Images",
+    "attachments": "Attachments",
+    "categories": "Categories",
+    "tags": "Tags",
+    "avgWords": "Avg Words",
+    "draftsPending": "Pending Drafts",
+    "noDrafts": "No draft posts",
+    "moreDrafts": "+{{count}} more drafts",
+    "quickStats": "Quick Stats",
+    "noCategories": "No categories",
+    "noTags": "No tags"
+  }
+}

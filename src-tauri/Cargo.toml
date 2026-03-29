@@ -1,0 +1,36 @@
+[package]
+name = "hugo-cms"
+version = "0.1.0"
+description = "A desktop CMS for Hugo static site generator"
+authors = ["you"]
+edition = "2021"
+rust-version = "1.70"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+toml = "0.8"
+toml_edit = "0.22"
+tokio = { version = "1", features = ["full"] }
+anyhow = "1"
+walkdir = "2"
+uuid = { version = "1", features = ["v4"] }
+chrono = "0.4"
+zip = "0.6"
+reqwest = { version = "0.11", features = ["json"] }
+base64 = "0.21"
+open = "5"
+regex = "1"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

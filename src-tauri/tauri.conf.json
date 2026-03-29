@@ -1,0 +1,107 @@
+{
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
+  },
+  "bundle": {
+    "active": true,
+    "category": "DeveloperTool",
+    "copyright": "",
+    "externalBin": [],
+    "icon": ["icons/icon.ico"],
+    "longDescription": "",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": [],
+    "shortDescription": "A desktop CMS for Hugo",
+    "targets": "all",
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    }
+  },
+  "identifier": "com.hugo.cms",
+  "productName": "Hugo CMS",
+  "version": "0.1.0",
+  "app": {
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 800,
+        "resizable": true,
+        "title": "Hugo CMS",
+        "width": 1200,
+        "center": true,
+        "minWidth": 800,
+        "minHeight": 600
+      }
+    ],
+    "security": {
+      "csp": null,
+      "capabilities": [
+        {
+          "identifier": "main-capability",
+          "description": "Main application capabilities",
+          "windows": ["main"],
+          "permissions": [
+            "core:default",
+            "dialog:allow-open",
+            "dialog:allow-save",
+            "dialog:default",
+            {
+              "identifier": "fs:allow-read-file",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-write-file",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-write-text-file",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-read-dir",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-copy-file",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-create",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-mkdir",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-remove",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-rename",
+              "allow": [{"path": "**"}]
+            },
+            {
+              "identifier": "fs:allow-exists",
+              "allow": [{"path": "**"}]
+            },
+            "shell:allow-execute",
+            "shell:allow-kill",
+            "shell:allow-spawn"
+          ]
+        }
+      ]
+    }
+  }
+}

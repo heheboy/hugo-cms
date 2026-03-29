@@ -1,0 +1,454 @@
+{
+  "app": {
+    "name": "Hugo CMS",
+    "errors": {
+      "loadFileTree": "加载文件树失败",
+      "openProject": "打开项目失败",
+      "createProject": "创建项目失败",
+      "createProjectDetail": "创建项目失败: {{error}}。请确保 Hugo 已安装并添加到 PATH。",
+      "startPreview": "启动预览失败",
+      "build": "构建失败",
+      "deploy": "部署失败",
+      "hugoNotInstalled": "Hugo 未安装。请先安装 Hugo: https://gohugo.io/installation/",
+      "gitNoChanges": "没有需要提交的更改",
+      "gitNotInitialized": "项目不是 Git 仓库，请先初始化 Git",
+      "gitNoRemote": "没有配置远程仓库或网络连接失败",
+      "deployDetail": "部署失败: {{error}}",
+      "themeRequiredForNewContent": "创建文章需要配置主题。请先安装主题，或在 hugo.toml 中移除 theme 配置以使用空白主题。",
+      "archetypeNotFound": "Archetype 模板未找到。Hugo 会尝试使用默认模板继续。",
+      "createPostFailed": "创建文章失败: {{error}}",
+      "blankThemeNotSupported": "Hugo 不支持完全空白的主题配置。请至少安装一个主题，或创建基础模板文件。"
+    },
+    "git": {
+      "commitMessage": "来自 Hugo CMS 的更新",
+      "deploySuccess": "提交并推送成功！"
+    }
+  },
+  "common": {
+    "actions": {
+      "open": "打开",
+      "create": "创建",
+      "save": "保存",
+      "cancel": "取消",
+      "close": "关闭",
+      "refresh": "刷新",
+      "new": "新建",
+      "browse": "浏览"
+    },
+    "status": {
+      "loading": "加载中...",
+      "error": "错误",
+      "success": "成功",
+      "modified": "已修改"
+    },
+    "language": {
+      "title": "语言",
+      "zhCN": "中文",
+      "en": "English"
+    }
+  },
+  "header": {
+    "buttons": {
+      "newPost": "新建文章",
+      "preview": "打开预览窗口",
+      "stop": "停止预览",
+      "build": "构建",
+      "git": "Git",
+      "deploy": "部署",
+      "closeProject": "关闭项目"
+    },
+    "badges": {
+      "modified": "已修改"
+    },
+    "dialog": {
+      "newPost": {
+        "title": "创建新文章",
+        "titleLabel": "标题",
+        "placeholder": "输入文章标题...",
+        "slug": "Slug: {{slug}}",
+        "create": "创建",
+        "creating": "创建中...",
+        "cancel": "取消"
+      }
+    }
+  },
+  "sidebar": {
+    "project": {
+      "noProject": "未打开项目",
+      "openProject": "打开项目",
+      "newSite": "新建站点"
+    },
+    "tabs": {
+      "files": "文件",
+      "media": "媒体",
+      "stats": "统计"
+    },
+    "empty": {
+      "noFiles": "暂无文件",
+      "openPrompt": "打开项目以查看文件"
+    },
+    "comingSoon": {
+      "media": "媒体浏览器即将推出",
+      "git": "Git 集成即将推出"
+    },
+    "contextMenu": {
+      "newFile": "新建文件",
+      "newFolder": "新建文件夹",
+      "cut": "剪切",
+      "copy": "复制",
+      "paste": "粘贴",
+      "rename": "重命名",
+      "delete": "删除",
+      "copied": "已复制到剪贴板",
+      "deleteFileConfirm": "确定要删除文件 \"{{name}}\" 吗？",
+      "deleteFolderConfirm": "确定要删除文件夹 \"{{name}}\" 及其所有内容吗？",
+      "pasteFailed": "粘贴操作失败",
+      "deleteFailed": "删除失败",
+      "renameFailed": "重命名失败",
+      "createFileFailed": "创建文件失败",
+      "createFolderFailed": "创建文件夹失败"
+    },
+    "dialog": {
+      "newName": "新名称",
+      "namePlaceholder": "输入新名称",
+      "fileName": "文件名",
+      "fileNamePlaceholder": "输入文件名（如：post.md）",
+      "folderName": "文件夹名称",
+      "folderNamePlaceholder": "输入文件夹名称"
+    }
+  },
+  "editor": {
+    "modes": {
+      "edit": "编辑",
+      "split": "分屏",
+      "preview": "预览"
+    },
+    "empty": {
+      "noProject": "未打开项目",
+      "openPrompt": "点击「打开」加载 Hugo 项目",
+      "previewNotRunning": "点击预览启动 Hugo 服务器"
+    },
+    "tooltip": {
+      "save": "Ctrl+S"
+    },
+    "alerts": {
+      "saveFailed": "保存文件失败: {{error}}"
+    },
+    "buttons": {
+      "save": "保存"
+    },
+    "toolbar": {
+      "bold": "加粗",
+      "italic": "斜体",
+      "heading": "标题",
+      "quote": "引用",
+      "code": "代码块",
+      "ul": "无序列表",
+      "ol": "有序列表",
+      "link": "链接",
+      "image": "图片",
+      "table": "表格",
+      "hr": "分隔线",
+      "attachment": "附件"
+    },
+    "insertImage": "插入图片",
+    "insertAttachment": "插入附件",
+    "unsavedChangesTitle": "未保存的修改",
+    "unsavedChangesDescription": "文件有未保存的修改，是否保存？",
+    "dontSave": "不保存",
+    "saveAndClose": "保存并关闭"
+  },
+  "terminal": {
+    "title": "终端",
+    "status": {
+      "serverRunning": "● 服务器运行中",
+      "executing": "执行中..."
+    },
+    "placeholders": {
+      "typeCommand": "输入命令...",
+      "openProjectFirst": "先打开项目...",
+      "startTyping": "输入命令开始...",
+      "openProjectToEnable": "打开项目以启用终端"
+    },
+    "quickCommands": {
+      "hugoServer": "hugo server",
+      "hugoBuild": "hugo build",
+      "hugoNew": "hugo new",
+      "gitStatus": "git status",
+      "gitAdd": "git add",
+      "gitCommit": "git commit"
+    },
+    "messages": {
+      "noProject": "未选择项目。请先打开 Hugo 项目。",
+      "startingServer": "正在启动 Hugo 服务器...",
+      "serverStarted": "Hugo 服务器已启动，端口: {{port}}",
+      "creatingContent": "正在创建内容: {{path}}...",
+      "runningCommand": "正在运行: {{command}}...",
+      "commandSuccess": "命令执行成功。",
+      "exitCode": "退出代码: {{code}}"
+    },
+    "buttons": {
+      "clear": "清空"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "tabs": {
+      "general": "通用",
+      "editor": "编辑器",
+      "preview": "预览",
+      "appearance": "外观"
+    },
+    "hugo": {
+      "title": "Hugo 配置",
+      "description": "配置 Hugo 可执行文件路径",
+      "path": "Hugo 路径",
+      "pathPlaceholder": "留空使用系统 PATH 中的 Hugo",
+      "pathHint": "如果 Hugo 不在系统 PATH 中，请指定完整路径",
+      "verify": "验证",
+      "autoDetect": "自动检测",
+      "version": "版本",
+      "usingSystem": "使用系统 PATH 中的 Hugo"
+    },
+    "language": {
+      "title": "语言设置",
+      "description": "选择界面语言"
+    },
+    "editor": {
+      "title": "编辑器设置",
+      "description": "配置代码编辑器行为",
+      "fontSize": "字体大小",
+      "tabSize": "缩进大小",
+      "wordWrap": "自动换行",
+      "wordWrapDescription": "当行太长时自动换行显示",
+      "lineNumbers": "行号",
+      "lineNumbersDescription": "显示行号",
+      "minimap": "缩略图",
+      "minimapDescription": "在编辑器右侧显示代码缩略图",
+      "insertSpaces": "使用空格缩进",
+      "insertSpacesDescription": "使用空格代替制表符"
+    },
+    "preview": {
+      "title": "预览设置",
+      "description": "配置 Hugo 预览服务器",
+      "defaultPort": "默认端口",
+      "defaultPortDescription": "Hugo 服务器的默认端口号 (1000-9999)",
+      "autoRefresh": "自动刷新",
+      "autoRefreshDescription": "文件修改后自动刷新预览",
+      "openInBrowser": "自动打开浏览器",
+      "openInBrowserDescription": "启动预览后自动在浏览器中打开"
+    },
+    "appearance": {
+      "title": "外观设置",
+      "description": "自定义界面外观",
+      "theme": "主题",
+      "themeSystem": "跟随系统",
+      "themeLight": "浅色",
+      "themeDark": "深色",
+      "sidebarWidth": "侧边栏宽度",
+      "sidebarWidthDescription": "调整侧边栏的宽度 (200-400px)",
+      "terminalHeight": "终端高度",
+      "terminalHeightDescription": "调整底部终端的高度 (150-500px)"
+    },
+    "comingSoon": {
+      "editor": "编辑器设置即将推出",
+      "preview": "预览设置即将推出",
+      "appearance": "外观设置即将推出"
+    }
+  },
+  "theme": {
+    "title": "主题管理",
+    "noProject": "请先打开一个项目",
+    "installed": "已安装",
+    "market": "主题市场",
+    "installedThemes": "已安装主题 ({{count}})",
+    "officialThemes": "官方主题 ({{count}})",
+    "noThemes": "暂无主题",
+    "browseMarket": "浏览主题市场",
+    "searchPlaceholder": "搜索主题...",
+    "loading": "加载中...",
+    "noSearchResults": "没有找到匹配的主题",
+    "install": "安装",
+    "installing": "安装中...",
+    "installed": "已安装",
+    "installFromUrl": "从 URL 安装",
+    "activate": "启用",
+    "active": "当前主题",
+    "noPreview": "无预览",
+    "version": "版本",
+    "by": "作者",
+    "installTitle": "安装主题",
+    "fromGit": "从 Git 仓库",
+    "fromZip": "从 ZIP 文件",
+    "gitUrl": "Git 仓库地址",
+    "gitUrlHint": "支持 GitHub、GitLab 等 Git 仓库地址",
+    "zipFile": "ZIP 文件",
+    "zipFileHint": "选择主题 ZIP 文件",
+    "downloadUrl": "下载地址",
+    "downloadUrlHint": "输入主题下载地址",
+    "name": "主题名称",
+    "nameHint": "用于本地存储的主题文件夹名称",
+    "uninstall": "卸载主题",
+    "uninstallConfirm": "确定要卸载主题 {{name}} 吗？",
+    "checkUpdates": "检查更新",
+    "checkingUpdates": "检查中...",
+    "updateAvailable": "有可用更新",
+    "update": "更新",
+    "updating": "更新中...",
+    "noUpdates": "暂无可用更新",
+    "currentVersion": "当前: {{version}}",
+    "latestVersion": "最新: {{version}}",
+    "missingTitle": "主题未安装",
+    "missingDescription": "主题 \"{{theme}}\" 已配置但未找到。您需要先安装主题才能预览。",
+    "themeRequired": "需要安装主题才能预览网站。",
+    "fromMarket": "从主题市场安装",
+    "fromMarketDesc": "浏览官方 Hugo 主题并一键安装",
+    "fromFolder": "本地文件夹",
+    "fromFolderDesc": "从电脑中选择主题文件夹",
+    "folderPath": "文件夹路径",
+    "selectFolder": "选择主题文件夹",
+    "selectFolderPlaceholder": "选择主题文件夹...",
+    "folderHint": "选择包含主题文件的本地文件夹",
+    "folderInstallNotImplemented": "从文件夹安装功能尚未实现",
+    "installFromLocal": "从本地安装",
+    "fromZip": "从 ZIP 文件安装",
+    "fromZipDesc": "选择主题 ZIP 压缩包进行安装",
+    "editConfig": "编辑 hugo.toml",
+    "editConfigDesc": "手动移除或更改主题配置",
+    "customMarket": "自定义",
+    "customUrlPlaceholder": "输入主题市场 JSON URL",
+    "customUrlHint": "支持返回JSON格式的主题列表API",
+    "load": "加载",
+    "customThemes": "自定义主题 ({{count}})",
+    "noCustomThemes": "输入URL加载自定义主题市场",
+    "loadCustomFailed": "加载自定义主题失败，请检查URL是否正确",
+    "officialMarketRedirect": "themes.gohugo.io 是官方主题市场，请切换到「市场」标签页查看",
+    "openUrlFailed": "无法打开链接"
+  },
+  "git": {
+    "title": "Git",
+    "noProject": "请先打开一个项目",
+    "changes": "更改",
+    "staged": "已暂存",
+    "history": "历史",
+    "commit": "提交",
+    "commitTitle": "提交更改",
+    "commitMessage": "提交信息",
+    "commitMessagePlaceholder": "输入提交信息...",
+    "committing": "提交中...",
+    "filesToCommit": "{{count}} 个文件将被提交",
+    "pull": "拉取",
+    "push": "推送",
+    "stageAll": "全部暂存",
+    "noStagedFiles": "暂无暂存文件",
+    "noChanges": "暂无更改",
+    "allChanges": "所有更改",
+    "createBranch": "创建分支",
+    "branchName": "分支名称",
+    "checkoutNewBranch": "切换到新分支",
+    "create": "创建",
+    "refreshBranches": "刷新分支列表",
+    "commitHistory": "提交历史",
+    "noCommits": "暂无提交记录",
+    "noDiff": "无差异",
+    "diff": "查看差异",
+    "staged": "已暂存",
+    "unstaged": "未暂存",
+    "modified": "已修改",
+    "untracked": "未跟踪",
+    "viewDiff": "查看差异",
+    "stash": "存储",
+    "stashes": "存储列表",
+    "noStashes": "暂无存储",
+    "stashSave": "保存存储",
+    "stashPop": "弹出存储",
+    "stashApply": "应用存储",
+    "stashDrop": "删除存储",
+    "createStash": "创建存储",
+    "createStashDescription": "将当前更改保存到存储",
+    "stashMessagePlaceholder": "输入存储消息（可选）...",
+    "noStashMessage": "分支上的工作进度",
+    "tags": "标签",
+    "noTags": "暂无标签",
+    "createTag": "创建标签",
+    "createTagDescription": "为当前提交创建新标签",
+    "tagName": "标签名称",
+    "tagMessage": "标签消息",
+    "tagMessagePlaceholder": "输入标签消息（可选，用于附注标签）...",
+    "tagCommit": "提交",
+    "tagCommitPlaceholder": "留空表示当前 HEAD",
+    "deleteTag": "删除标签",
+    "pushTag": "推送标签",
+    "pushAllTags": "推送所有标签",
+    "remotes": "远程仓库",
+    "noRemotes": "未配置远程仓库",
+    "addRemote": "添加远程仓库",
+    "removeRemote": "删除远程仓库",
+    "remoteName": "远程名称",
+    "remoteUrl": "远程 URL",
+    "addRemoteDescription": "添加新的远程仓库"
+  },
+  "media": {
+    "noProject": "请先打开一个项目",
+    "folders": "文件夹",
+    "files": "文件",
+    "upload": "上传",
+    "newFolder": "新建文件夹",
+    "rename": "重命名",
+    "delete": "删除",
+    "deleteConfirmTitle": "删除文件",
+    "deleteConfirmDescription": "确定要删除 {{name}} 吗？",
+    "deleteFolderTitle": "删除文件夹",
+    "deleteFolderDescription": "确定要删除文件夹「{{name}}」及其所有内容吗？",
+    "renameTitle": "重命名文件",
+    "renameFolderTitle": "重命名文件夹",
+    "renamePlaceholder": "输入新名称...",
+    "uploadTitle": "上传文件",
+    "uploadDescription": "拖放文件到此处或点击选择",
+    "createFolderTitle": "创建文件夹",
+    "createFolderDescription": "输入文件夹名称",
+    "folderNamePlaceholder": "文件夹名称",
+    "uploading": "上传中...",
+    "uploadSuccess": "成功上传 {{count}} 个文件",
+    "uploadPrompt": "在此上传图片和文件",
+    "empty": "暂无文件",
+    "dropzoneText": "拖放文件到此处或点击选择",
+    "supportedFormats": "支持格式：PNG、JPG、GIF、SVG、WebP",
+    "selectFiles": "选择文件",
+    "selectedFiles": "已选择 {{count}} 个文件",
+    "clear": "清空",
+    "open": "打开",
+    "copyPath": "复制路径",
+    "copyMarkdown": "复制 Markdown",
+    "selectImage": "选择此图片",
+    "selectFile": "选择此文件",
+    "preview": "预览",
+    "root": "根目录",
+    "rootShort": "根",
+    "imagesFolder": "图片",
+    "imagesShort": "图片",
+    "attachmentsFolder": "附件",
+    "attachmentsShort": "附件",
+    "back": "返回上一层"
+  },
+  "stats": {
+    "title": "站点统计",
+    "noProject": "请先打开一个项目",
+    "overview": "概览",
+    "drafts": "草稿",
+    "taxonomy": "分类/标签",
+    "posts": "文章",
+    "words": "字数",
+    "images": "图片",
+    "attachments": "附件",
+    "categories": "分类",
+    "tags": "标签",
+    "avgWords": "平均字数",
+    "draftsPending": "待发布的草稿",
+    "noDrafts": "没有草稿文章",
+    "moreDrafts": "还有 {{count}} 篇草稿",
+    "quickStats": "快速统计",
+    "noCategories": "暂无分类",
+    "noTags": "暂无标签"
+  }
+}
