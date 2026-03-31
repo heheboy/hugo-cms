@@ -8,7 +8,7 @@ import {
   useCommandHistoryStore,
   type CommandHistory,
 } from '@/stores/commandHistoryStore';
-import { executeCommandWithHistory, hugoNewContent, hugoBuild, hugoServer } from '@/hooks/useTauri';
+import { executeCommandWithHistory, hugoServer } from '@/hooks/useTauri';
 
 interface TerminalProps {
   projectPath: string | null;
@@ -35,6 +35,21 @@ export function Terminal({ projectPath }: TerminalProps) {
     }
   }, [commands]);
 
+  // Parse command line arguments to extract values
+  const parseArgValue = (args: string[], ...flags: string[]): string | undefined => {
+    for (const flag of flags) {
+      const index = args.indexOf(flag);
+      if (index !== -1 && index + 1 < args.length) {
+        return args[index + 1];
+      }
+    }
+    return undefined;
+  };
+
+  const hasFlag = (args: string[], ...flags: string[]): boolean => {
+    return flags.some(flag => args.includes(flag));
+  };
+
   const executeCommandWrapper = useCallback(
     async (cmd: string) => {
       if (!cmd.trim() || !projectPath) {
@@ -53,25 +68,35 @@ export function Terminal({ projectPath }: TerminalProps) {
         const command = parts[0];
         const args = parts.slice(1);
 
-        // Special handling for hugo commands
-        if (command === 'hugo') {
-          if (args[0] === 'server' || args.includes('server')) {
-            const port = await hugoServer(projectPath);
-            setIsServerRunning(true);
-            // Note: hugoServer manages its own history entry via the store
-            setIsExecuting(false);
-            return;
-          } else if (args[0] === 'new' && args[1] === 'content') {
-            const contentPath = args[2];
-            const archetype = args.includes('--kind') ? args[args.indexOf('--kind') + 1] : undefined;
-            await hugoNewContent(projectPath, contentPath, archetype);
-          } else {
-            await hugoBuild(projectPath);
-          }
-        } else {
-          // Generic command execution with history logging
-          await executeCommandWithHistory(projectPath, command, args);
+        // Special handling for hugo server only (long-running process)
+        // All other commands (including hugo new/build) execute as-is
+        if (command === 'hugo' && (args[0] === 'server' || args.includes('server'))) {
+          // Parse user-provided arguments
+          const portStr = parseArgValue(args, '--port', '-p');
+          const bind = parseArgValue(args, '--bind', '-b');
+          const baseURL = parseArgValue(args, '--baseURL', '-b');
+          const buildDrafts = hasFlag(args, '-D', '--buildDrafts');
+          const disableLiveReload = hasFlag(args, '--disableLiveReload');
+          const renderToDisk = hasFlag(args, '--renderToDisk');
+          const appendPort = !hasFlag(args, '--appendPort=false', '--appendPort=false');
+
+          const port = portStr ? parseInt(portStr, 10) : undefined;
+
+          // Call hugoServer with parsed options
+          const actualPort = await hugoServer(projectPath, {
+            port,
+            bind,
+            baseURL,
+            buildDrafts,
+          });
+          setIsServerRunning(true);
+          // Note: hugoServer manages its own history entry via the store
+          setIsExecuting(false);
+          return;
         }
+
+        // All other commands execute as-is (generic shell execution)
+        await executeCommandWithHistory(projectPath, command, args);
       } catch (error) {
         console.error('Command execution error:', error);
       } finally {

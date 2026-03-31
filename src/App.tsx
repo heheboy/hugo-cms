@@ -253,7 +253,7 @@ tech: []
           // Ignore error if no deploy config
         }
 
-        const port = await hugoServer(currentProject.path, previewBaseURL);
+        const port = await hugoServer(currentProject.path, { baseURL: previewBaseURL });
         setIsPreviewRunning(true);
         setPreviewPort(port);
 

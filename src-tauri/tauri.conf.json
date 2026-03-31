@@ -30,7 +30,7 @@
   },
   "identifier": "com.hugo.cms",
   "productName": "Hugo CMS",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "app": {
     "windows": [
       {

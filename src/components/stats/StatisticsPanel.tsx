@@ -16,9 +16,10 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { useProjectStore } from '@/stores/projectStore';
-import { readFile, buildFileTree } from '@/hooks/useTauri';
+import { readFile, buildFileTree, openFileInEditor } from '@/hooks/useTauri';
 import type { FileNode } from '@/types';
 import YAML from 'yaml';
+import { useEditorStore } from '@/stores/editorStore';
 
 interface ContentStats {
   totalPosts: number;
@@ -45,7 +46,8 @@ interface RecentFile {
 
 export function StatisticsPanel() {
   const { t } = useTranslation();
-  const { currentProject } = useProjectStore();
+  const { currentProject, setSelectedFile } = useProjectStore();
+  const { openFile } = useEditorStore();
   const [stats, setStats] = useState<ContentStats>({
     totalPosts: 0,
     totalWords: 0,
@@ -227,6 +229,21 @@ export function StatisticsPanel() {
     return `${count} 字`;
   };
 
+  // Handle click on draft post to open in editor
+  const handleDraftClick = async (path: string) => {
+    if (!currentProject) return;
+
+    try {
+      const contentFile = await openFileInEditor(path, currentProject.path);
+      // Update project store to show file as selected
+      setSelectedFile(contentFile);
+      // Open in editor store
+      openFile(contentFile);
+    } catch (err) {
+      console.error('Failed to open draft:', err);
+    }
+  };
+
   if (!currentProject) {
     return (
       <div className="text-center py-8 text-muted-foreground">
@@ -341,8 +358,16 @@ export function StatisticsPanel() {
                     {stats.draftPosts.slice(0, 3).map((draft) => (
                       <div
                         key={draft.path}
-                        className="text-sm p-2 rounded hover:bg-accent truncate"
+                        onClick={() => handleDraftClick(draft.path)}
+                        className="text-sm p-2 rounded hover:bg-accent truncate cursor-pointer"
                         title={draft.title}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            handleDraftClick(draft.path);
+                          }
+                        }}
                       >
                         {draft.title}
                       </div>
@@ -395,7 +420,15 @@ export function StatisticsPanel() {
                   {stats.draftPosts.map((draft) => (
                     <div
                       key={draft.path}
-                      className="p-3 rounded-lg border hover:bg-accent/50 transition-colors"
+                      onClick={() => handleDraftClick(draft.path)}
+                      className="p-3 rounded-lg border hover:bg-accent/50 cursor-pointer transition-colors"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          handleDraftClick(draft.path);
+                        }
+                      }}
                     >
                       <div className="flex items-start gap-2">
                         <PenLine className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />

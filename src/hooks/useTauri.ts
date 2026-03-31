@@ -203,12 +203,34 @@ export async function renameFile(oldPath: string, newPath: string): Promise<void
 }
 
 // Hugo API
-export async function hugoServer(projectPath: string, baseURL?: string): Promise<number> {
+export async function hugoServer(
+  projectPath: string,
+  options?: {
+    baseURL?: string;
+    port?: number;
+    bind?: string;
+    buildDrafts?: boolean;
+  }
+): Promise<number> {
   const { addCommand, updateCommand } = useCommandHistoryStore.getState();
+
+  const args = ['server'];
+  if (options?.port) {
+    args.push('--port', options.port.toString());
+  }
+  if (options?.bind) {
+    args.push('--bind', options.bind);
+  }
+  if (options?.baseURL) {
+    args.push('--baseURL', options.baseURL);
+  }
+  if (options?.buildDrafts) {
+    args.push('--buildDrafts');
+  }
 
   const commandId = addCommand({
     command: 'hugo',
-    args: ['server', '--port', '1313', '--bind', '127.0.0.1', ...(baseURL ? ['--baseURL', baseURL] : [])],
+    args,
     cwd: projectPath,
     stdout: '',
     stderr: '',
@@ -217,10 +239,16 @@ export async function hugoServer(projectPath: string, baseURL?: string): Promise
   const startTime = Date.now();
 
   try {
-    const port = await invoke<number>('hugo_server', { projectPath, baseURL });
+    const port = await invoke<number>('hugo_server', {
+      projectPath,
+      baseURL: options?.baseURL,
+      port: options?.port,
+      bind: options?.bind,
+      buildDrafts: options?.buildDrafts,
+    });
     updateCommand(commandId, {
       status: 'success',
-      stdout: `Hugo server started on http://127.0.0.1:${port}`,
+      stdout: `Hugo server started on http://${options?.bind || '127.0.0.1'}:${port}`,
       duration: Date.now() - startTime,
     });
     return port;
@@ -1156,4 +1184,66 @@ export async function openPreviewWindow(port: number): Promise<void> {
 // Close preview window if it exists
 export async function closePreviewWindow(): Promise<void> {
   return invoke('close_preview_window');
+}
+
+// Import types for file opening
+import type { ContentFile } from '@/types';
+import YAML from 'yaml';
+
+/**
+ * Open a file in editor by path
+ * Reads the file, parses frontmatter, and returns ContentFile object
+ * Caller should update projectStore.setSelectedFile and editorStore.openFile
+ */
+export async function openFileInEditor(
+  path: string,
+  currentProjectPath: string
+): Promise<ContentFile> {
+  // Normalize path for consistency
+  const normalizedPath = path.replace(/\\/g, '/');
+
+  // Read file content
+  const content = await readFile(normalizedPath);
+
+  // Parse frontmatter and body
+  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+
+  let frontmatter: Record<string, unknown> = {};
+  let body = content;
+
+  if (frontmatterMatch) {
+    const frontmatterContent = frontmatterMatch[1];
+    body = frontmatterMatch[2] || '';
+
+    // Use YAML library to properly parse frontmatter
+    try {
+      frontmatter = YAML.parse(frontmatterContent) || {};
+    } catch (err) {
+      console.error('Failed to parse frontmatter:', err);
+      // Fallback to simple parsing if YAML parse fails
+      frontmatterContent.split('\n').forEach((line) => {
+        const match = line.match(/^([\w-]+):\s*(.+)$/);
+        if (match) {
+          const [, key, value] = match;
+          frontmatter[key] = value.replace(/^["']|["']$/g, '');
+        }
+      });
+    }
+  }
+
+  const fileName = normalizedPath.split('/').pop() || '';
+  const slug = fileName.replace(/\.md$/, '');
+
+  const contentFile: ContentFile = {
+    path: normalizedPath,
+    slug,
+    title: (frontmatter.title as string) || slug,
+    draft: frontmatter.draft === true || frontmatter.draft === 'true',
+    date: frontmatter.date as string,
+    frontmatter,
+    body: content,
+    wordCount: body.split(/\s+/).length,
+  };
+
+  return contentFile;
 }

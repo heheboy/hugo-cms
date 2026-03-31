@@ -3,7 +3,14 @@ use std::process::{Command, Stdio};
 use std::sync::Mutex;
 use tauri::{AppHandle, Emitter, Manager, State, WebviewUrl, WebviewWindowBuilder};
 
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
 use super::settings::{get_hugo_path, AppSettings};
+
+// Windows-specific: hide console window when spawning child process
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommandOutput {
@@ -30,6 +37,9 @@ impl Default for HugoProcess {
 pub async fn hugo_server(
     project_path: String,
     base_url: Option<String>,
+    port: Option<u16>,
+    bind: Option<String>,
+    build_drafts: Option<bool>,
     state: State<'_, HugoProcess>,
     settings_state: State<'_, Mutex<AppSettings>>,
 ) -> Result<u16, String> {
@@ -46,8 +56,9 @@ pub async fn hugo_server(
     let (hugo_path, default_port, auto_refresh, open_in_browser) = {
         let settings = settings_state.lock().map_err(|e| e.to_string())?;
         let hugo_path = get_hugo_path(&*settings);
-        let default_port = settings.preview.default_port;
-        let auto_refresh = settings.preview.auto_refresh;
+        let default_port = port.unwrap_or(settings.preview.default_port);
+        // If user explicitly passes build_drafts, use it; otherwise use settings
+        let auto_refresh = build_drafts.unwrap_or(settings.preview.auto_refresh);
         let open_in_browser = settings.preview.open_in_browser;
         (hugo_path, default_port, auto_refresh, open_in_browser)
     };
@@ -55,9 +66,9 @@ pub async fn hugo_server(
     // Find a free port, starting from configured default port
     let port = find_free_port_starting_from(default_port);
 
-    // Build command arguments based on settings
+    // Build command arguments based on settings and user input
     // Use provided base_url (for GitHub Pages subdirectory support) or default localhost
-    let default_base_url = format!("http://127.0.0.1:{}", port);
+    let default_base_url = format!("http://{}:{}", bind.as_deref().unwrap_or("127.0.0.1"), port);
     let effective_base_url = base_url.unwrap_or(default_base_url);
 
     let mut args = vec![
@@ -65,7 +76,7 @@ pub async fn hugo_server(
         "--port".to_string(),
         port.to_string(),
         "--bind".to_string(),
-        "127.0.0.1".to_string(),
+        bind.unwrap_or_else(|| "127.0.0.1".to_string()),
         "--baseURL".to_string(),
         effective_base_url,
         "--appendPort=false".to_string(),
@@ -77,6 +88,18 @@ pub async fn hugo_server(
     }
 
     // Start hugo server - capture stderr to report errors
+    // On Windows, hide the console window
+    #[cfg(windows)]
+    let mut child = Command::new(&hugo_path)
+        .current_dir(&project_path)
+        .args(&args)
+        .stdout(Stdio::null())
+        .stderr(Stdio::piped())
+        .creation_flags(CREATE_NO_WINDOW)
+        .spawn()
+        .map_err(|e| format!("Failed to start hugo server: {}. Please check your Hugo path in Settings.", e))?;
+
+    #[cfg(not(windows))]
     let mut child = Command::new(&hugo_path)
         .current_dir(&project_path)
         .args(&args)
@@ -95,7 +118,7 @@ pub async fn hugo_server(
             let mut stderr = String::new();
             if let Some(ref mut err) = child.stderr {
                 use std::io::Read;
-                let _ = err.read_to_string(&mut stderr);
+                let _: Result<usize, _> = err.read_to_string(&mut stderr);
             }
 
             // Check for theme/module not found error

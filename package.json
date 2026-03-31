@@ -1,6 +1,6 @@
 {
   "name": "hugo-cms",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A desktop CMS for Hugo static site generator",
   "type": "module",
   "scripts": {
