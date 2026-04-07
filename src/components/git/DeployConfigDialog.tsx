@@ -67,6 +67,7 @@ export function DeployConfigDialog({ open, onOpenChange }: DeployConfigDialogPro
   const [repoUrl, setRepoUrl] = useState('');
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [targetBranch, setTargetBranch] = useState('main');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -80,6 +81,7 @@ export function DeployConfigDialog({ open, onOpenChange }: DeployConfigDialogPro
         setRepoUrl(config.repo_url);
         setUserName(config.user_name);
         setUserEmail(config.user_email);
+        setTargetBranch(config.target_branch || 'main');
       }
     } catch (err) {
       console.error('Failed to load deploy config:', err);
@@ -111,6 +113,7 @@ export function DeployConfigDialog({ open, onOpenChange }: DeployConfigDialogPro
         user_name: userName.trim(),
         user_email: userEmail.trim(),
         path_prefix: pathPrefix,
+        target_branch: targetBranch.trim() || 'main',
       };
 
       await saveDeployConfig(currentProject.path, config);
@@ -199,6 +202,22 @@ export function DeployConfigDialog({ open, onOpenChange }: DeployConfigDialogPro
               />
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="target-branch">
+                {t('deploy.config.targetBranch', '目标分支')}
+                <span className="text-red-500 ml-1">*</span>
+              </Label>
+              <Input
+                id="target-branch"
+                value={targetBranch}
+                onChange={(e) => setTargetBranch(e.target.value)}
+                placeholder="main"
+              />
+              <p className="text-xs text-muted-foreground">
+                {t('deploy.config.targetBranchHint', '部署时推送到的目标分支，如：main、master、gh-pages')}
+              </p>
+            </div>
+
             <Button
               onClick={handleSave}
               disabled={isLoading}
@@ -209,7 +228,7 @@ export function DeployConfigDialog({ open, onOpenChange }: DeployConfigDialogPro
 
             <div className="text-xs text-muted-foreground space-y-1">
               <p>{t('deploy.config.note1', '配置将保存到项目目录的 .hugo-cms-deploy.json 文件中')}</p>
-              <p>{t('deploy.config.note2', '部署时会执行：hugo build → git push --force 到部署仓库的 main 分支')}</p>
+              <p>{t('deploy.config.note2', '部署时会执行：hugo build → git push --force 到配置的目标分支')}</p>
             </div>
           </div>
         )}

@@ -408,7 +408,8 @@ tech: []
         currentProject.path,
         config.repo_url,
         config.user_name,
-        config.user_email
+        config.user_email,
+        config.target_branch
       );
       console.log('Deploy result:', result);
 

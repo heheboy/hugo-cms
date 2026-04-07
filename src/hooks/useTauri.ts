@@ -1077,13 +1077,15 @@ export interface DeployConfig {
   user_name: string;
   user_email: string;
   path_prefix: string; // Path prefix for static assets (e.g., "/blog")
+  target_branch?: string; // Target branch for deployment (default: "main")
 }
 
 export async function deployToPages(
   projectPath: string,
   repoUrl: string,
   userName: string,
-  userEmail: string
+  userEmail: string,
+  targetBranch?: string
 ): Promise<string> {
   const { addCommand, updateCommand } = useCommandHistoryStore.getState();
 
@@ -1133,6 +1135,7 @@ export async function deployToPages(
       repoUrl,
       userName,
       userEmail,
+      targetBranch,
     });
 
     // Update main command with success
@@ -1168,7 +1171,12 @@ export async function saveDeployConfig(
 export async function loadDeployConfig(
   projectPath: string
 ): Promise<DeployConfig | null> {
-  return invoke('load_deploy_config', { projectPath });
+  const config = await invoke<DeployConfig | null>('load_deploy_config', { projectPath });
+  // Backward compatibility: default target_branch to "main" if not set
+  if (config && !config.target_branch) {
+    config.target_branch = 'main';
+  }
+  return config;
 }
 
 // Open external URL in system default browser

@@ -10,6 +10,12 @@ pub struct DeployConfig {
     pub user_email: String,
     #[serde(default)]
     pub path_prefix: String, // Path prefix for static assets (e.g., "/blog")
+    #[serde(default = "default_branch")]
+    pub target_branch: String, // Target branch for deployment, default: "main"
+}
+
+fn default_branch() -> String {
+    "main".to_string()
 }
 
 #[derive(Debug, serde::Serialize, Clone)]
@@ -72,7 +78,7 @@ fn derive_path_prefix(repo_url: &str) -> String {
     }
 }
 
-/// Deploy Hugo site to GitHub Pages (main branch)
+/// Deploy Hugo site to GitHub Pages (configured branch)
 #[tauri::command]
 pub async fn deploy_to_pages(
     app: AppHandle,
@@ -80,6 +86,7 @@ pub async fn deploy_to_pages(
     repo_url: String,
     user_name: String,
     user_email: String,
+    target_branch: Option<String>,
 ) -> Result<String, String> {
     let public_path = format!("{}/public", project_path);
 
@@ -372,12 +379,15 @@ pub async fn deploy_to_pages(
         });
     }
 
-    // Step 6.5: Create and checkout main branch
-    println!("Creating main branch...");
+    // Use configured branch or default to "main"
+    let target_branch = target_branch.unwrap_or_else(|| "main".to_string());
+
+    // Step 6.5: Create and checkout configured branch
+    println!("Creating {} branch...", target_branch);
     emit_deploy_progress(&app, DeployProgressEvent {
         step: "git_branch".to_string(),
         command: "git".to_string(),
-        args: vec!["checkout".to_string(), "-b".to_string(), "main".to_string()],
+        args: vec!["checkout".to_string(), "-b".to_string(), target_branch.clone()],
         cwd: public_path.clone(),
         status: "running".to_string(),
         stdout: "".to_string(),
@@ -386,35 +396,35 @@ pub async fn deploy_to_pages(
 
     let branch_output = Command::new("git")
         .current_dir(&public_path)
-        .args(["checkout", "-b", "main"])
+        .args(["checkout", "-b", &target_branch])
         .output()
-        .map_err(|e| format!("Failed to create main branch: {}", e))?;
+        .map_err(|e| format!("Failed to create {} branch: {}", target_branch, e))?;
 
     if !branch_output.status.success() {
         // If branch already exists, just checkout
         Command::new("git")
             .current_dir(&public_path)
-            .args(["checkout", "main"])
+            .args(["checkout", &target_branch])
             .output()
-            .map_err(|e| format!("Failed to checkout main branch: {}", e))?;
+            .map_err(|e| format!("Failed to checkout {} branch: {}", target_branch, e))?;
     }
 
     emit_deploy_progress(&app, DeployProgressEvent {
         step: "git_branch".to_string(),
         command: "git".to_string(),
-        args: vec!["checkout".to_string(), "-b".to_string(), "main".to_string()],
+        args: vec!["checkout".to_string(), "-b".to_string(), target_branch.clone()],
         cwd: public_path.clone(),
         status: "success".to_string(),
-        stdout: "Switched to branch 'main'".to_string(),
+        stdout: format!("Switched to branch '{}'", target_branch),
         stderr: "".to_string(),
     });
 
-    // Step 7: Push to main branch (force)
-    println!("Pushing to main branch...");
+    // Step 7: Push to configured branch (force)
+    println!("Pushing to {} branch...", target_branch);
     emit_deploy_progress(&app, DeployProgressEvent {
         step: "git_push".to_string(),
         command: "git".to_string(),
-        args: vec!["push".to_string(), "origin".to_string(), "main".to_string(), "--force".to_string()],
+        args: vec!["push".to_string(), "origin".to_string(), target_branch.clone(), "--force".to_string()],
         cwd: public_path.clone(),
         status: "running".to_string(),
         stdout: "".to_string(),
@@ -423,50 +433,31 @@ pub async fn deploy_to_pages(
 
     let push_output = Command::new("git")
         .current_dir(&public_path)
-        .args(["push", "origin", "main", "--force"])
+        .args(["push", "origin", &target_branch, "--force"])
         .output()
         .map_err(|e| format!("Failed to push: {}", e))?;
 
     if !push_output.status.success() {
-        // Try pushing to master if main fails
+        let stderr = String::from_utf8_lossy(&push_output.stderr);
         emit_deploy_progress(&app, DeployProgressEvent {
             step: "git_push".to_string(),
             command: "git".to_string(),
-            args: vec!["push".to_string(), "origin".to_string(), "master".to_string(), "--force".to_string()],
+            args: vec!["push".to_string()],
             cwd: public_path.clone(),
-            status: "running".to_string(),
+            status: "error".to_string(),
             stdout: "".to_string(),
-            stderr: "Retrying with master branch...".to_string(),
+            stderr: stderr.to_string(),
         });
-
-        let push_output_master = Command::new("git")
-            .current_dir(&public_path)
-            .args(["push", "origin", "master", "--force"])
-            .output()
-            .map_err(|e| format!("Failed to push to main or master: {}", e))?;
-
-        if !push_output_master.status.success() {
-            let stderr = String::from_utf8_lossy(&push_output.stderr);
-            emit_deploy_progress(&app, DeployProgressEvent {
-                step: "git_push".to_string(),
-                command: "git".to_string(),
-                args: vec!["push".to_string()],
-                cwd: public_path.clone(),
-                status: "error".to_string(),
-                stdout: "".to_string(),
-                stderr: stderr.to_string(),
-            });
-            return Err(format!(
-                "Git push failed. Make sure you have write access to the repository. Error: {}",
-                stderr
-            ));
-        }
+        return Err(format!(
+            "Git push failed. Make sure you have write access to the repository and the branch '{}' exists. Error: {}",
+            target_branch, stderr
+        ));
     }
 
     emit_deploy_progress(&app, DeployProgressEvent {
         step: "git_push".to_string(),
         command: "git".to_string(),
-        args: vec!["push".to_string(), "origin".to_string(), "main".to_string(), "--force".to_string()],
+        args: vec!["push".to_string(), "origin".to_string(), target_branch.clone(), "--force".to_string()],
         cwd: public_path.clone(),
         status: "success".to_string(),
         stdout: String::from_utf8_lossy(&push_output.stdout).to_string(),
@@ -476,7 +467,7 @@ pub async fn deploy_to_pages(
     // Cleanup: remove .git from public
     fs::remove_dir_all(&git_dir).ok();
 
-    Ok(format!("Successfully deployed to {}", repo_url))
+    Ok(format!("Successfully deployed to {} ({} branch)", repo_url, target_branch))
 }
 
 /// Save deploy config to project directory
